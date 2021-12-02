@@ -3,32 +3,78 @@ import {View, Text, StyleSheet} from 'react-native';
 import {Input, Button} from 'react-native-elements';
 import database from '@react-native-firebase/database';
 
-const checkDuplicateUsers = (userlist, cnic) => {
-  console.log('check duplicate');
-  console.log(userlist);
-  let flag = false;
+function Signup({navigation}) {
+  const [name, setName] = useState();
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+  const [email, setEmail] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
+  const [cnic, setCNIC] = useState();
 
-  for (let user of userlist) {
-    console.log(user.cnic);
-    if (user.cnic === cnic) {
-      flag = true;
+  const checkDuplicateUsers = (userlist, cnic) => {
+    let flag = false;
+
+    for (let user of userlist) {
+      if (user.cnic === cnic) {
+        flag = true;
+      }
+    }
+    return flag;
+  };
+
+  function verificationEmail(email) {
+    let flag = false;
+    for (let letter of email) {
+      if (letter === '@') {
+        flag = true;
+      }
+    }
+
+    return flag;
+  }
+
+  function calculateLength(password) {
+    let count = 0;
+    for (let char of password) {
+      count++;
+    }
+    return count;
+  }
+
+  function passwordVerification(password, confirmpassword) {
+    let len1 = calculateLength(password);
+    let len2 = calculateLength(confirmpassword);
+    let match = 0;
+
+    if (len1 == len2) {
+      for (let i = 0; i < len1; i++) {
+        if (password[len1] == confirmpassword[len1]) {
+          match++;
+        }
+      }
+      if (match === len1) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      alert('passwords dont match');
     }
   }
-  return flag;
-};
-
-function writetoDatabase(
-  name,
-  username,
-  password,
-  email,
-  cnic,
-  confirmpassword,
-) {
-  if(verificationEmail(email)==true){
-
-    const ref = database().ref('/users').push();
-    let userlist = [];
+  function writetoDatabase(
+    name,
+    username,
+    password,
+    email,
+    cnic,
+    confirmpassword,
+  ) {
+    if (
+      verificationEmail(email) == true &&
+      passwordVerification(password, confirmpassword) == true
+    ) {
+      const ref = database().ref('/users').push();
+      let userlist = [];
       database()
         .ref('/users')
         .once('value')
@@ -42,7 +88,10 @@ function writetoDatabase(
                 cnic: cnic,
                 password: password,
               })
-              .then(() => console.log('Registered successflly!'));
+              .then(() => {
+                console.log('Registered successflly!');
+                navigation.navigate('Login');
+              });
             setName('');
             setUsername('');
             setPassword('');
@@ -53,9 +102,9 @@ function writetoDatabase(
             snapshot.forEach(user => {
               userlist.push(user.val());
             });
-  
+
             const val = checkDuplicateUsers(userlist, cnic);
-  
+
             if (val == true) {
               alert('Already registered!');
             } else {
@@ -67,7 +116,10 @@ function writetoDatabase(
                   cnic: cnic,
                   password: password,
                 })
-                .then(() => alert('Registered successflly!'));
+                .then(() => {
+                  alert('Registered successflly!');
+                  navigation.navigate('Login');
+                });
               setName('');
               setUsername('');
               setPassword('');
@@ -77,40 +129,14 @@ function writetoDatabase(
             }
           }
         });
-   
-  }else{
-    alert('Incorrect email! missing @')
-  }
-
-}
-
-
-
-function verificationEmail(email) {
-  let flag = false;
-  for (let letter of email) {
-    if (letter === '@') {
-      flag = true;
+    } else {
+      if (verificationEmail(email) == false) {
+        alert('email is incorrect!');
+      } else if (passwordVerification(password, confirmpassword) == false) {
+        alert('passwords dont match!');
+      }
     }
   }
-
-  console.log(flag);
-  return flag;
-}
-
-
-
-
-function Signup() {
-  const [name, setName] = useState();
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
-  const [email, setEmail] = useState(
-
-  );
-  const [confirmPassword, setConfirmPassword] = useState();
-  const [cnic, setCNIC] = useState();
-
 
   return (
     <View style={styles.maincontainer}>
@@ -134,17 +160,16 @@ function Signup() {
           }}
           inputStyle={styles.inputtext}
         />
+
         <Input
           placeholder="Email"
           ContainerStyle={styles.inputbox}
-          onChangeText={(email)=>{
+          onChangeText={email => {
             setEmail(email);
           }}
           inputStyle={styles.inputtext}
-       
-      
-           
         />
+
         <Input
           placeholder="CNIC"
           ContainerStyle={styles.inputbox}
@@ -220,7 +245,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   inputtext: {
-    color: '#ffffff',
+    color: '#fff',
   },
 
   innertextContainer: {
@@ -255,6 +280,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 10,
     color: '#ffffff',
+  },
+
+  error: {
+    fontSize: 14,
   },
 });
 export default Signup;
