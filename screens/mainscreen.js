@@ -29,7 +29,7 @@ const mainscreen = ({navigation}) => {
           });
         }
       });
-    navigation.navigate('DetailsScreen', carlist);
+    navigation.navigate('DetailsScreen', {list:carlist});
   };
   return (
     <View style={styles.maincontainer}>
