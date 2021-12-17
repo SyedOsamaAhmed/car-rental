@@ -1,16 +1,14 @@
-import React, {memo} from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import {SliderBox} from 'react-native-image-slider-box';
+
 import {Button} from 'react-native-elements';
 import database from '@react-native-firebase/database';
 
-const mainscreen = ({navigation}) => {
-  const images = [
-    require('../assets/Honda-City.jpg'),
-    require('../assets/vitz.jpg'),
-    require('../assets/mehran.jpg'),
-    require('../assets/rent_a_car.jpg'),
-  ];
+import List from '../components/List';
+
+const mainscreen = () => {
+  const [cars, setCars] = useState();
+  const [flag, setFlag] = useState(false);
 
   const extractCarDetails = () => {
     let carlist = [];
@@ -25,35 +23,36 @@ const mainscreen = ({navigation}) => {
               newcar = subitem.val();
               newcar['numberplate'] = subitem.key;
               carlist.push(newcar);
+              setCars(carlist);
             });
           });
         }
       });
-    navigation.navigate('DetailsScreen', {list:carlist});
+    setFlag(true);
   };
+
   return (
     <View style={styles.maincontainer}>
-      <SliderBox
-        images={images}
-        sliderBoxHeight={200}
-        dotColor="#FFEE58"
-        inactiveDotColor="#90A4AE"
-        autoplay
-        circleLoop
-      />
-
       <Text style={styles.tagline}>{'Don’t dream it. Drive it!'}</Text>
-
       <Text style={styles.headline}>
         Browse the best cars at economical prices and guranteed Safety
       </Text>
-
       <Button
         title="Browse"
         buttonStyle={styles.button}
         containerStyle={styles.buttonContainer}
         onPress={() => extractCarDetails()}
       />
+      {flag ? (
+        <View style={styles.footer}>
+          {cars ? (
+            <List list={cars} />
+          ) : (
+            <Text style={styles.tagline}>Loading</Text>
+          )}
+        </View>
+      ) : null}
+      
     </View>
   );
 };
@@ -87,6 +86,12 @@ const styles = StyleSheet.create({
     margin: 5,
 
     flexDirection: 'row-reverse',
+  },
+
+  footer: {
+    flex: 2,
+    justifyContent: 'center',
+    backgroundColor: '#000000',
   },
 });
 

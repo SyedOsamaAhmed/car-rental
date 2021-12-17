@@ -14,11 +14,11 @@ const App = () => {
       <Stack.Navigator>
         {/* <Stack.Screen name="SignUp" component={Signup} options={{headerShown:false,}} /> */}
         {/*   <Stack.Screen name="Login" component={Login} options={{headerShown:false,}} /> */}
-       {/*  <Stack.Screen
+        <Stack.Screen
           name="MainScreen"
           component={MainScreen}
           options={{headerShown: false}}
-        /> */}
+        />
         <Stack.Screen
           name="DetailsScreen"
           component={CarDetails}
