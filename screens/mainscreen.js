@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, ActivityIndicator} from 'react-native';
 
 import {Button} from 'react-native-elements';
 import database from '@react-native-firebase/database';
 
 import List from '../components/List';
 
-const mainscreen = () => {
+const mainscreen = ({navigation}) => {
   const [cars, setCars] = useState();
   const [flag, setFlag] = useState(false);
 
@@ -46,9 +46,9 @@ const mainscreen = () => {
       {flag ? (
         <View style={styles.footer}>
           {cars ? (
-            <List list={cars} />
+            <List list={cars}/>
           ) : (
-            <Text style={styles.tagline}>Loading</Text>
+            <ActivityIndicator size="large" color="#0000ff" />
           )}
         </View>
       ) : null}
@@ -84,7 +84,6 @@ const styles = StyleSheet.create({
 
   buttonContainer: {
     margin: 5,
-
     flexDirection: 'row-reverse',
   },
 

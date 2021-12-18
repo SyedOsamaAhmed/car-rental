@@ -1,26 +1,27 @@
 import React from 'react';
 import {View, StyleSheet, Text, FlatList} from 'react-native';
 import {Button} from 'react-native-elements';
+import {useNavigation} from '@react-navigation/native';
+
 const List = props => {
-
-
+  const navigation = useNavigation();
   const renderItem = ({item}) => (
-   
-
     <View style={styles.cars}>
       <Text style={styles.cardetails}>Name: {item.name}</Text>
       <Text style={styles.cardetails}>Catagory: {item.catagory}</Text>
       <Text style={styles.cardetails}>Color: {item.color}</Text>
+      <Text style={styles.cardetails}>Stereo: {item.stereo}</Text>
       <Text style={styles.cardetails}>Status: {item.licensestatus}</Text>
       <Text style={styles.cardetails}>Price/day: {item.priceperday}</Text>
       <Text style={styles.cardetails}>Price/hour: {item.priceperhour}</Text>
 
-      <Button title="Book"
+      <Button
+        title="Book"
         buttonStyle={styles.button}
         containerStyle={styles.buttonContainer}
+        onPress={() => navigation.navigate('DetailsScreen')}
       />
-      </View>
-
+    </View>
   );
   return (
     <View style={styles.footer}>
@@ -38,7 +39,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderColor: '#f0ede6',
     borderWidth: 3,
-
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
@@ -61,10 +61,8 @@ const styles = StyleSheet.create({
 
   buttonContainer: {
     margin: 10,
-
     flexDirection: 'row-reverse',
   },
-
 
   text: {
     color: '#f0ede6',

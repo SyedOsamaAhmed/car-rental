@@ -4,7 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Signup from './screens/Signup';
 import Login from './screens/Login';
 import MainScreen from './screens/mainscreen';
-import CarDetails from './screens/cardetails';
+import Bookings from './screens/bookingdetails'
 
 const Stack = createNativeStackNavigator();
 
@@ -21,7 +21,7 @@ const App = () => {
         />
         <Stack.Screen
           name="DetailsScreen"
-          component={CarDetails}
+          component={Bookings}
           options={{headerShown: false}}
         />
       </Stack.Navigator>
