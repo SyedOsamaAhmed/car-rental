@@ -1,15 +1,78 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import {Button, Input} from 'react-native-elements';
+import DatePicker from 'react-native-date-picker';
 
-const bookingdetails = () => {
+const  BookingDetails = () => {
+  const [startdate, setStartDate] = useState(new Date());
+  const [enddate, setEndtDate] = useState(new Date());
+  const [openStartDate, setOpenStartDate] = useState(false);
+  const [openEndDate, setOpenEndDate] = useState(false);
+
   return (
     <View style={styles.maincontainer}>
-      <View style={styles.detailscontainer}>
-        <Text style={styles.heading}>Booking Details</Text>
+      <Text style={styles.heading}>Booking Details</Text>
+
+      <Input placeholder="Name" containerStyle={styles.inputContainer} />
+      <Input placeholder="CNIC" containerStyle={styles.inputContainer} />
+      <Input placeholder="Age" containerStyle={styles.inputContainer} />
+
+      <View style={styles.detailsContainer}>
+        <View style={styles.bookingstartdate}>
+          <Text style={styles.bookingtitle}>Booking Start date</Text>
+          <Button 
+          title="Start date"
+          type="outline"
+          containerStyle={styles.buttoncontainer}
+           onPress={() => setOpenStartDate(true)}
+            />
+          <DatePicker
+            modal
+            open={openStartDate}
+            date={startdate}
+            onConfirm={date => {
+              setOpenStartDate(false);
+              setStartDate(date);
+            }}
+            onCancel={() => {
+              setOpenStartDate(false);
+            }}
+          />
+        </View>
+
+        <View style={styles.bookingenddate}>
+          <Text style={styles.bookingtitle}>Booking End date</Text>
+          <Button
+           title="End date"
+           type="outline"
+           containerStyle={styles.buttoncontainer}
+            onPress={() => setOpenEndDate(true)} />
+          <DatePicker
+            modal
+            open={openEndDate}
+            date={enddate}
+            onConfirm={date => {
+              setOpenEndDate(false);
+              setEndtDate(date);
+            }}
+            onCancel={() => {
+              setOpenEndDate(false);
+            }}
+          />
+        </View>
+      </View>
+      <View style={styles.confirmbuttoncontainer}>
+      <Button
+                title="Confirm Booking"
+                buttonStyle={styles.button}
+                containerStyle={styles.buttoncontainer}
+                />
+
       </View>
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   maincontainer: {
     display: 'flex',
@@ -18,15 +81,62 @@ const styles = StyleSheet.create({
   },
 
   heading: {
-    backgroundColor: '#fcba03',
+    color: '#fcba03',
     fontSize: 20,
     fontWeight: 'bold',
+    margin: 8,
   },
 
-  detailscontainer: {
+
+  bookingstartdate:{
+    flexDirection: 'row',
+    margin:5
+
+  },
+
+  bookingenddate:{
+    flexDirection: 'row',
+    margin:5
+
+  },
+
+  bookingtitle: {
+    color: '#fafffb',
+    fontSize: 17,
+    margin: 10,
+  },
+  title: {
+    color: '#fafffb',
+    fontSize: 16,
+    margin: 3,
+  },
+
+  buttoncontainer: {
+    width: '50%',
+    margin: 8,
+  },
+
+
+  confirmbuttoncontainer:{
+ 
+    margin: 5,
+    flexDirection:'row-reverse'
+    
+  },
+  inputContainer: {
     display: 'flex',
-    flex: 2,
-   margin:5,
+    margin: 3,
+  },
+
+
+  button:{
+    backgroundColor: 'rgba(78, 116, 289, 1)',
+    borderRadius: 3,
+  },
+  detailsContainer: {
+
+    justifyContent: 'space-between',
+    margin:5
   },
 });
-export default bookingdetails;
+export default BookingDetails;
