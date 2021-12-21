@@ -3,9 +3,11 @@ import {View, Text, StyleSheet} from 'react-native';
 import {Button, Input} from 'react-native-elements';
 import DatePicker from 'react-native-date-picker';
 
-const  BookingDetails = () => {
+const BookingDetails = () => {
   const [startdate, setStartDate] = useState(new Date());
   const [enddate, setEndtDate] = useState(new Date());
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
   const [openStartDate, setOpenStartDate] = useState(false);
   const [openEndDate, setOpenEndDate] = useState(false);
 
@@ -20,16 +22,17 @@ const  BookingDetails = () => {
       <View style={styles.detailsContainer}>
         <View style={styles.bookingstartdate}>
           <Text style={styles.bookingtitle}>Booking Start date</Text>
-          <Button 
-          title="Start date"
-          type="outline"
-          containerStyle={styles.buttoncontainer}
-           onPress={() => setOpenStartDate(true)}
-            />
+          <Button
+            title="Start date"
+            type="outline"
+            containerStyle={styles.buttoncontainer}
+            onPress={() => setOpenStartDate(true)}
+          />
           <DatePicker
             modal
             open={openStartDate}
             date={startdate}
+            mode="date"
             onConfirm={date => {
               setOpenStartDate(false);
               setStartDate(date);
@@ -43,14 +46,16 @@ const  BookingDetails = () => {
         <View style={styles.bookingenddate}>
           <Text style={styles.bookingtitle}>Booking End date</Text>
           <Button
-           title="End date"
-           type="outline"
-           containerStyle={styles.buttoncontainer}
-            onPress={() => setOpenEndDate(true)} />
+            title="End date"
+            type="outline"
+            containerStyle={styles.buttoncontainer}
+            onPress={() => setOpenEndDate(true)}
+          />
           <DatePicker
             modal
             open={openEndDate}
             date={enddate}
+            mode="date"
             onConfirm={date => {
               setOpenEndDate(false);
               setEndtDate(date);
@@ -60,14 +65,38 @@ const  BookingDetails = () => {
             }}
           />
         </View>
-      </View>
-      <View style={styles.confirmbuttoncontainer}>
-      <Button
-                title="Confirm Booking"
-                buttonStyle={styles.button}
-                containerStyle={styles.buttoncontainer}
-                />
 
+        <View style={styles.bookingtime}>
+          <Text style={styles.bookingtitle}>Booking Time</Text>
+          <Button
+            title="Select time"
+            type="outline"
+            containerStyle={styles.buttoncontainer}
+            onPress={() => setOpen(true)}
+          />
+
+          <DatePicker
+            modal
+            open={open}
+            date={date}
+            mode="time"
+            onConfirm={date => {
+              setOpen(false);
+              setDate(date);
+            }}
+            onCancel={() => {
+              setOpen(false);
+            }}
+          />
+        </View>
+      </View>
+
+      <View style={styles.confirmbuttoncontainer}>
+        <Button
+          title="Confirm Booking"
+          buttonStyle={styles.button}
+          containerStyle={styles.buttoncontainer}
+        />
       </View>
     </View>
   );
@@ -87,17 +116,14 @@ const styles = StyleSheet.create({
     margin: 8,
   },
 
-
-  bookingstartdate:{
+  bookingstartdate: {
     flexDirection: 'row',
-    margin:5
-
+    margin: 5,
   },
 
-  bookingenddate:{
+  bookingenddate: {
     flexDirection: 'row',
-    margin:5
-
+    margin: 5,
   },
 
   bookingtitle: {
@@ -105,6 +131,12 @@ const styles = StyleSheet.create({
     fontSize: 17,
     margin: 10,
   },
+
+  bookingtime: {
+    flexDirection: 'row',
+    margin: 5,
+  },
+
   title: {
     color: '#fafffb',
     fontSize: 16,
@@ -116,27 +148,22 @@ const styles = StyleSheet.create({
     margin: 8,
   },
 
-
-  confirmbuttoncontainer:{
- 
+  confirmbuttoncontainer: {
     margin: 5,
-    flexDirection:'row-reverse'
-    
+    flexDirection: 'row-reverse',
   },
   inputContainer: {
     display: 'flex',
     margin: 3,
   },
 
-
-  button:{
+  button: {
     backgroundColor: 'rgba(78, 116, 289, 1)',
     borderRadius: 3,
   },
   detailsContainer: {
-
     justifyContent: 'space-between',
-    margin:5
+    margin: 5,
   },
 });
 export default BookingDetails;
