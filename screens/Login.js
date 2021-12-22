@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {Input, Button} from 'react-native-elements';
+import {Auth} from '../authentication/Auth';
 import Feather from 'react-native-vector-icons/Feather';
-const Login = () => {
+const Login = ({navigation}) => {
   const [password, setPassword] = useState();
   const [email, setEmail] = useState();
   const [textInputChange, setTextInputChange] = useState(false);
@@ -32,15 +33,16 @@ const Login = () => {
             placeholder="Enter email"
             ContainerStyle={styles.inputbox}
             inputStyle={styles.inputtext}
+            rightIcon={<Feather name="check-circle" color="white" size={20} />}
+            rightIconContainerStyle={styles.icon}
             onChangeText={email => detectInput(email)}
           />
+         
         ) : (
           <Input
             placeholder="Enter email"
             ContainerStyle={styles.inputbox}
             inputStyle={styles.inputtext}
-            rightIcon={<Feather name="check-circle" color="white" size={20} />}
-            rightIconContainerStyle={styles.icon}
             onChangeText={email => detectInput(email)}
           />
         )}
@@ -67,7 +69,10 @@ const Login = () => {
           rightIconContainerStyle={styles.icon}
         />
         <View style={styles.buttonContainer}>
-          <Button title="Login" buttonStyle={styles.button} />
+          <Button title="Login" buttonStyle={styles.button} onPress={()=>{
+            Auth.SignIn(email,password);
+            navigation.navigate('MainScreen')
+            }} />
         </View>
       </View>
     </View>

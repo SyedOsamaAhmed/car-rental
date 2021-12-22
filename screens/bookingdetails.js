@@ -3,6 +3,8 @@ import {View, Text, StyleSheet} from 'react-native';
 import {Button, Input} from 'react-native-elements';
 import DatePicker from 'react-native-date-picker';
 
+
+
 const BookingDetails = () => {
   const [startdate, setStartDate] = useState(new Date());
   const [enddate, setEndtDate] = useState(new Date());
@@ -11,10 +13,12 @@ const BookingDetails = () => {
   const [openStartDate, setOpenStartDate] = useState(false);
   const [openEndDate, setOpenEndDate] = useState(false);
 
+
+
   return (
     <View style={styles.maincontainer}>
       <Text style={styles.heading}>Booking Details</Text>
-
+      
       <Input placeholder="Name" containerStyle={styles.inputContainer} />
       <Input placeholder="CNIC" containerStyle={styles.inputContainer} />
       <Input placeholder="Age" containerStyle={styles.inputContainer} />
