@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">414232621208-4hb556n0aae7jpqkg3npugtm8ire6hnc.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">414232621208</string>
+    <string name="google_api_key" translatable="false">AIzaSyAl7DSZRoU3VBB5tpg4rsZK4w9xxaBQ6BU</string>
+    <string name="google_app_id" translatable="false">1:414232621208:android:5ee9f04a76ec82d50ba0ed</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAl7DSZRoU3VBB5tpg4rsZK4w9xxaBQ6BU</string>
+    <string name="google_storage_bucket" translatable="false">rent-a-car-app-98368.appspot.com</string>
+    <string name="project_id" translatable="false">rent-a-car-app-98368</string>
+</resources>
