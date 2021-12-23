@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
-} from 'react-native';
-import {Input, Button} from 'react-native-elements';
+} from "react-native";
+import { Input, Button } from "react-native-elements";
 
-import {Auth} from '../authentication/Auth';
+import { Auth } from "../authentication/Auth";
 
-function Signup({navigation}) {
+function Signup({ navigation }) {
   const [name, setName] = useState();
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
@@ -28,30 +28,32 @@ function Signup({navigation}) {
           hitSlop={{
             bottom: 20,
             top: 50,
-          }}>
+          }}
+        >
           <View>
             <Input
               placeholder="Name"
               ContainerStyle={styles.inputbox}
-              onChangeText={name => {
+              onChangeText={(name) => {
                 setName(name);
               }}
               inputStyle={styles.inputtext}
             />
           </View>
         </TouchableWithoutFeedback>
-      
+
         <TouchableWithoutFeedback
           onPress={() => Keyboard.dismiss()}
           hitSlop={{
             bottom: 20,
             top: 50,
-          }}>
+          }}
+        >
           <View>
             <Input
               placeholder="Username"
               ContainerStyle={styles.inputbox}
-              onChangeText={username => {
+              onChangeText={(username) => {
                 setUsername(username);
               }}
               inputStyle={styles.inputtext}
@@ -63,13 +65,14 @@ function Signup({navigation}) {
           hitSlop={{
             bottom: 20,
             top: 50,
-          }}>
+          }}
+        >
           <View>
             <Input
               placeholder="Password"
               ContainerStyle={styles.inputbox}
               secureTextEntry={true}
-              onChangeText={password => {
+              onChangeText={(password) => {
                 setPassword(password);
               }}
               inputStyle={styles.inputtext}
@@ -82,12 +85,13 @@ function Signup({navigation}) {
           hitSlop={{
             bottom: 20,
             top: 50,
-          }}>
+          }}
+        >
           <View>
             <Input
               placeholder="Email"
               ContainerStyle={styles.inputbox}
-              onChangeText={email => {
+              onChangeText={(email) => {
                 setEmail(email);
               }}
               inputStyle={styles.inputtext}
@@ -100,12 +104,13 @@ function Signup({navigation}) {
           hitSlop={{
             bottom: 20,
             top: 50,
-          }}>
+          }}
+        >
           <View>
             <Input
               placeholder="CNIC"
               ContainerStyle={styles.inputbox}
-              onChangeText={cnic => {
+              onChangeText={(cnic) => {
                 setCNIC(cnic);
               }}
               inputStyle={styles.inputtext}
@@ -119,16 +124,14 @@ function Signup({navigation}) {
             title="Register"
             buttonStyle={styles.button}
             onPress={() => {
-              Auth.SignUp(email, name, username, cnic,password);
-              navigation.navigate('Login');
+              Auth.SignUp(email, name, username, cnic, password);
+              navigation.navigate("Login");
             }}
           />
         </View>
 
         <View style={styles.innertextContainer}>
-          <Text style={styles.linktext}>
-            Already have an account! Login  
-          </Text>
+          <Text style={styles.linktext}>Already have an account! Login</Text>
         </View>
       </View>
     </View>
@@ -137,55 +140,54 @@ function Signup({navigation}) {
 
 const styles = StyleSheet.create({
   maincontainer: {
-    display: 'flex',
+    display: "flex",
     flex: 1,
-    justifyContent: 'space-evenly',
-    backgroundColor: '#000000',
+    justifyContent: "space-evenly",
+    backgroundColor: "#000000",
   },
 
   header: {
     flex: 0.5,
     margin: 5,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
 
   footer: {
     flex: 3,
-    justifyContent: 'space-evenly',
+    justifyContent: "space-evenly",
   },
   inputtext: {
-    color: '#fff',
+    color: "#fff",
   },
 
   innertextContainer: {
-    flexDirection: 'row-reverse',
+    flexDirection: "row-reverse",
     top: -12,
     marginLeft: 7,
   },
 
   linktext: {
     fontSize: 13,
-    color: '#ffffff',
+    color: "#ffffff",
   },
-
 
   inputbox: {
     margin: 3,
   },
   buttonContainer: {
-    flexDirection: 'row-reverse',
+    flexDirection: "row-reverse",
   },
 
   button: {
-    width: '80%',
+    width: "80%",
     borderRadius: 10,
   },
 
   heading: {
     fontSize: 25,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginLeft: 10,
-    color: '#ffffff',
+    color: "#ffffff",
   },
 
   error: {
