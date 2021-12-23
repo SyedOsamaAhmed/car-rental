@@ -1,173 +1,197 @@
-import React, { useState } from 'react'
-import { View, Text, StyleSheet, SafeAreaView, ScrollView } from 'react-native'
-import { Input, Button } from 'react-native-elements';
-import database from '@react-native-firebase/database';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
+import { Input, Button } from "react-native-elements";
 
+import { Auth } from "../authentication/Auth";
 
+function Signup({ navigation }) {
+  const [name, setName] = useState();
+  const [username, setUsername] = useState();
+  const [email, setEmail] = useState();
+  const [cnic, setCNIC] = useState();
+  const [password, setPassword] = useState();
 
-
-const Signup = () => {
-    const writetoDatabase = (name, username, password, email, cnic) => {
-
-        if( database().ref() ==null){
-console.log('inside condition')
-            database().ref('users/')
-                .set({
-                    name: name,
-                    username: username,
-                    email: email,
-                    cnic: cnic,
-                    password: password
-    
-    
-                })
-                .then(() => console.log('Registered Successfully!'));
-        }
-    
-
-
-        setName('');
-        setUsername('');
-        setPassword('');
-        setEmail('');
-        setConfirmPassword('');
-        setCNIC('');
-
-
-    }
-
-    const [name, setName] = useState();
-    const [username, setUsername] = useState();
-    const [password, setPassword] = useState();
-    const [email, setEmail] = useState();
-    const [confirmPassword, setConfirmPassword] = useState();
-    const [cnic, setCNIC] = useState();
-
-
-
-    return (
-        <ScrollView contentContainerStyle={styles.mainContainer}>
-
-            <View>
-                <Text style={styles.heading}>Register yourself to avail amazing cars! </Text>
-            </View>
-
+  return (
+    <View style={styles.maincontainer}>
+      <View style={styles.header}>
+        <Text style={styles.heading}>Create Account</Text>
+      </View>
+      <View style={styles.footer}>
+        <TouchableWithoutFeedback
+          onPress={() => Keyboard.dismiss()}
+          hitSlop={{
+            bottom: 20,
+            top: 50,
+          }}
+        >
+          <View>
             <Input
-                placeholder='Name'
-                ContainerStyle={styles.inputbox}
-                onChangeText={(name) => { setName(name) }}
-                inputStyle={styles.inputtext}
+              placeholder="Name"
+              ContainerStyle={styles.inputbox}
+              onChangeText={(name) => {
+                setName(name);
+              }}
+              inputStyle={styles.inputtext}
             />
+          </View>
+        </TouchableWithoutFeedback>
+
+        <TouchableWithoutFeedback
+          onPress={() => Keyboard.dismiss()}
+          hitSlop={{
+            bottom: 20,
+            top: 50,
+          }}
+        >
+          <View>
             <Input
-                placeholder='Username'
-                ContainerStyle={styles.inputbox}
-                onChangeText={(username) => { setUsername(username) }}
-                inputStyle={styles.inputtext}
+              placeholder="Username"
+              ContainerStyle={styles.inputbox}
+              onChangeText={(username) => {
+                setUsername(username);
+              }}
+              inputStyle={styles.inputtext}
             />
+          </View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          onPress={() => Keyboard.dismiss()}
+          hitSlop={{
+            bottom: 20,
+            top: 50,
+          }}
+        >
+          <View>
             <Input
-                placeholder='Email'
-                ContainerStyle={styles.inputbox}
-                onChangeText={(email) => { setEmail(email) }}
-                inputStyle={styles.inputtext}
+              placeholder="Password"
+              ContainerStyle={styles.inputbox}
+              secureTextEntry={true}
+              onChangeText={(password) => {
+                setPassword(password);
+              }}
+              inputStyle={styles.inputtext}
             />
+          </View>
+        </TouchableWithoutFeedback>
+
+        <TouchableWithoutFeedback
+          onPress={() => Keyboard.dismiss()}
+          hitSlop={{
+            bottom: 20,
+            top: 50,
+          }}
+        >
+          <View>
             <Input
-                placeholder='CNIC'
-                ContainerStyle={styles.inputbox}
-                onChangeText={(cnic) => { setCNIC(cnic) }}
-                inputStyle={styles.inputtext}
-                keyboardType="numeric"
+              placeholder="Email"
+              ContainerStyle={styles.inputbox}
+              onChangeText={(email) => {
+                setEmail(email);
+              }}
+              inputStyle={styles.inputtext}
             />
+          </View>
+        </TouchableWithoutFeedback>
 
+        <TouchableWithoutFeedback
+          onPress={() => Keyboard.dismiss()}
+          hitSlop={{
+            bottom: 20,
+            top: 50,
+          }}
+        >
+          <View>
             <Input
-                placeholder='New Password'
-                secureTextEntry={true}
-                ContainerStyle={styles.inputbox}
-                onChangeText={(password) => { setPassword(password) }}
-                inputStyle={styles.inputtext}
+              placeholder="CNIC"
+              ContainerStyle={styles.inputbox}
+              onChangeText={(cnic) => {
+                setCNIC(cnic);
+              }}
+              inputStyle={styles.inputtext}
+              keyboardType="numeric"
             />
-            <Input
-                placeholder='Confirm Password'
-                secureTextEntry={true}
-                ContainerStyle={styles.inputbox}
-                onChangeText={(repassword) => { setConfirmPassword(repassword) }}
-                inputStyle={styles.inputtext}
-            />
+          </View>
+        </TouchableWithoutFeedback>
 
+        <View style={styles.buttonContainer}>
+          <Button
+            title="Register"
+            buttonStyle={styles.button}
+            onPress={() => {
+              Auth.SignUp(email, name, username, cnic, password);
+              navigation.navigate("Login");
+            }}
+          />
+        </View>
 
-
-            <View style={styles.buttonContainer}>
-                <Button
-                    title="Register"
-                    buttonStyle={styles.button}
-                    onPress={() => writetoDatabase(name, username, password, email,cnic)} />
-            </View>
-            <View style={styles.innertextContainer}>
-                <Text style={styles.linktext}>Already have an account!
-                    <Text style={styles.innerlinktext}> Login</Text>
-                </Text>
-            </View>
-
-
-        </ScrollView>
-
-    );
+        <View style={styles.innertextContainer}>
+          <Text style={styles.linktext}>Already have an account! Login</Text>
+        </View>
+      </View>
+    </View>
+  );
 }
 
-
 const styles = StyleSheet.create({
+  maincontainer: {
+    display: "flex",
+    flex: 1,
+    justifyContent: "space-evenly",
+    backgroundColor: "#000000",
+  },
 
-    mainContainer: {
-        display: 'flex',
-        flex: 1,
-        justifyContent: 'space-evenly',
-        backgroundColor: 'black'
-    },
-    inputtext: {
-        color: '#ffffff',
+  header: {
+    flex: 0.5,
+    margin: 5,
+    justifyContent: "flex-end",
+  },
 
-    },
+  footer: {
+    flex: 3,
+    justifyContent: "space-evenly",
+  },
+  inputtext: {
+    color: "#fff",
+  },
 
-    innertextContainer: {
+  innertextContainer: {
+    flexDirection: "row-reverse",
+    top: -12,
+    marginLeft: 7,
+  },
 
+  linktext: {
+    fontSize: 13,
+    color: "#ffffff",
+  },
 
-        flexDirection: 'row-reverse',
-        top: -18,
-        marginLeft: 7,
-    },
+  inputbox: {
+    margin: 3,
+  },
+  buttonContainer: {
+    flexDirection: "row-reverse",
+  },
 
+  button: {
+    width: "80%",
+    borderRadius: 10,
+  },
 
-    linktext: {
-        fontSize: 13,
-        color: '#ffffff',
-    },
-    innerlinktext: {
-        fontSize: 14,
-        fontWeight: 'bold',
+  heading: {
+    fontSize: 25,
+    fontWeight: "bold",
+    marginLeft: 10,
+    color: "#ffffff",
+  },
 
-    },
-
-    inputbox: {
-        margin: 3,
-
-
-    },
-    buttonContainer: {
-        flexDirection: 'row-reverse',
-    },
-
-    button: {
-        width: '80%',
-        borderRadius: 10,
-
-
-    },
-
-    heading: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginLeft: 10,
-        color: '#ffffff',
-    }
-
+  error: {
+    fontSize: 14,
+  },
 });
-export default Signup
+export default Signup;
