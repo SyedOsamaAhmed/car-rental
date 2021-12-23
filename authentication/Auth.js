@@ -18,7 +18,7 @@ function writetoDatabase(cred, name, username, cnic) {
     .then(() => console.log('Added successfully.'));
 }
 
-const SignUp = (email, name, username,cnic,password) => {
+const SignUp = (email, name, username,password) => {
  
     auth()
       .createUserWithEmailAndPassword(email, password)

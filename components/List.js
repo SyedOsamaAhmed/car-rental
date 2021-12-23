@@ -19,7 +19,7 @@ const List = props => {
         title="Book"
         buttonStyle={styles.button}
         containerStyle={styles.buttonContainer}
-        onPress={() => navigation.navigate('DetailsScreen')}
+        onPress={() => navigation.navigate('Details')}
       />
     </View>
   );
