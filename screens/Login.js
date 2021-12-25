@@ -71,7 +71,7 @@ const Login = ({navigation}) => {
         <View style={styles.buttonContainer}>
           <Button title="Login" buttonStyle={styles.button} onPress={()=>{
             Auth.SignIn(email,password);
-            navigation.navigate('MainScreen')
+          
             }} />
         </View>
       </View>

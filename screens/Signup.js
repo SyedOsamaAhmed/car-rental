@@ -7,16 +7,17 @@ import {
   Keyboard,
 } from "react-native";
 import { Input, Button } from "react-native-elements";
-
 import { Auth } from "../authentication/Auth";
+import { useNavigation } from "@react-navigation/native";
 
-function Signup({ navigation }) {
+function Signup() {
   const [name, setName] = useState();
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [cnic, setCNIC] = useState();
   const [password, setPassword] = useState();
 
+  const navigation = useNavigation();
   return (
     <View style={styles.maincontainer}>
       <View style={styles.header}>
@@ -60,6 +61,7 @@ function Signup({ navigation }) {
             />
           </View>
         </TouchableWithoutFeedback>
+
         <TouchableWithoutFeedback
           onPress={() => Keyboard.dismiss()}
           hitSlop={{
@@ -69,11 +71,10 @@ function Signup({ navigation }) {
         >
           <View>
             <Input
-              placeholder="Password"
+              placeholder="Email"
               ContainerStyle={styles.inputbox}
-              secureTextEntry={true}
-              onChangeText={(password) => {
-                setPassword(password);
+              onChangeText={(email) => {
+                setEmail(email);
               }}
               inputStyle={styles.inputtext}
             />
@@ -89,10 +90,12 @@ function Signup({ navigation }) {
         >
           <View>
             <Input
-              placeholder="Email"
+              placeholder="Password"
               ContainerStyle={styles.inputbox}
-              onChangeText={(email) => {
-                setEmail(email);
+              secureTextEntry={true}
+              onChangeText={(password) => {
+              
+                setPassword(password);
               }}
               inputStyle={styles.inputtext}
             />
@@ -124,15 +127,20 @@ function Signup({ navigation }) {
             title="Register"
             buttonStyle={styles.button}
             onPress={() => {
-              Auth.SignUp(email, name, username, cnic, password);
-              navigation.navigate("Login");
+              Auth.SignUp(email, name, username, password,cnic);
+              navigation.navigate("login");
             }}
           />
         </View>
 
-        <View style={styles.innertextContainer}>
-          <Text style={styles.linktext}>Already have an account! Login</Text>
-        </View>
+        <TouchableWithoutFeedback
+          accessibilityRole="link"
+          onPress={() => navigation.navigate("login")}
+        >
+          <View style={styles.innertextContainer}>
+            <Text style={styles.linktext}>Already have an account! Login</Text>
+          </View>
+        </TouchableWithoutFeedback>
       </View>
     </View>
   );
