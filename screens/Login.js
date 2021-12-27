@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {Input, Button} from 'react-native-elements';
-import {Auth} from '../authentication/Auth';
-import Feather from 'react-native-vector-icons/Feather';
-const Login = ({navigation}) => {
+import React, { useState, useContext } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { Input, Button } from "react-native-elements";
+import DataContext from "../context/DataContext";
+import Feather from "react-native-vector-icons/Feather";
+const Login = ({ navigation }) => {
+  const { loginstatus, SignIn } = useContext(DataContext);
   const [password, setPassword] = useState();
   const [email, setEmail] = useState();
   const [textInputChange, setTextInputChange] = useState(false);
@@ -35,15 +36,14 @@ const Login = ({navigation}) => {
             inputStyle={styles.inputtext}
             rightIcon={<Feather name="check-circle" color="white" size={20} />}
             rightIconContainerStyle={styles.icon}
-            onChangeText={email => detectInput(email)}
+            onChangeText={(email) => detectInput(email)}
           />
-         
         ) : (
           <Input
             placeholder="Enter email"
             ContainerStyle={styles.inputbox}
             inputStyle={styles.inputtext}
-            onChangeText={email => detectInput(email)}
+            onChangeText={(email) => detectInput(email)}
           />
         )}
 
@@ -52,13 +52,14 @@ const Login = ({navigation}) => {
           ContainerStyle={styles.inputbox}
           secureTextEntry={passwordvisibility ? true : false}
           inputStyle={styles.inputtext}
-          onChangeText={password => {
+          onChangeText={(password) => {
             setPassword(password);
             setPasswordVisibility(true);
           }}
           rightIcon={
             <TouchableOpacity
-              onPress={password => updateSecureTextEntry(password)}>
+              onPress={(password) => updateSecureTextEntry(password)}
+            >
               {passwordvisibility ? (
                 <Feather name="eye" color="white" size={20} />
               ) : (
@@ -69,10 +70,18 @@ const Login = ({navigation}) => {
           rightIconContainerStyle={styles.icon}
         />
         <View style={styles.buttonContainer}>
-          <Button title="Login" buttonStyle={styles.button} onPress={()=>{
-            Auth.SignIn(email,password);
-          
-            }} />
+          <Button
+            title="Login"
+            buttonStyle={styles.button}
+            onPress={() => {
+              SignIn(email, password);
+              {
+                loginstatus === true
+                  ? navigation.navigate("MainScreen")
+                  : navigation.navigate("Signup");
+              }
+            }}
+          />
         </View>
       </View>
     </View>
@@ -81,36 +90,36 @@ const Login = ({navigation}) => {
 
 const styles = StyleSheet.create({
   maincontainer: {
-    display: 'flex',
+    display: "flex",
     flex: 1,
 
-    backgroundColor: '#000000',
+    backgroundColor: "#000000",
   },
 
   inputtext: {
-    color: '#fff',
+    color: "#fff",
   },
   inputbox: {
     margin: 3,
   },
   footer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
 
   buttonContainer: {
-    flexDirection: 'row-reverse',
+    flexDirection: "row-reverse",
   },
 
   button: {
-    width: '80%',
+    width: "80%",
     borderRadius: 10,
   },
 
   heading: {
     fontSize: 30,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    fontWeight: "bold",
+    color: "#FFFFFF",
     margin: 5,
     top: -10,
   },
@@ -121,7 +130,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 58,
     height: 54,
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
 });
 export default Login;

@@ -1,23 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
 import { Input, Button } from "react-native-elements";
-import { Auth } from "../authentication/Auth";
+import DataContext from "../context/DataContext";
 import { useNavigation } from "@react-navigation/native";
 
 function Signup() {
+  const { signupstatus, SignUp ,setSignupStatus} = useContext(DataContext);
   const [name, setName] = useState();
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [cnic, setCNIC] = useState();
   const [password, setPassword] = useState();
-
   const navigation = useNavigation();
+
   return (
     <View style={styles.maincontainer}>
       <View style={styles.header}>
@@ -94,7 +96,6 @@ function Signup() {
               ContainerStyle={styles.inputbox}
               secureTextEntry={true}
               onChangeText={(password) => {
-              
                 setPassword(password);
               }}
               inputStyle={styles.inputtext}
@@ -127,15 +128,18 @@ function Signup() {
             title="Register"
             buttonStyle={styles.button}
             onPress={() => {
-              Auth.SignUp(email, name, username, password,cnic);
-              navigation.navigate("login");
+             
+              setSignupStatus( SignUp(email, name, username, password, cnic));
+              signupstatus === true
+                ? navigation.navigate("Login")
+                : Alert.alert("Error creating Account!");
             }}
           />
         </View>
 
         <TouchableWithoutFeedback
           accessibilityRole="link"
-          onPress={() => navigation.navigate("login")}
+          onPress={() => navigation.navigate("Login")}
         >
           <View style={styles.innertextContainer}>
             <Text style={styles.linktext}>Already have an account! Login</Text>
