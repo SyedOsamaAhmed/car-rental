@@ -1,10 +1,18 @@
 import React, { useState, useContext } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import { Input, Button } from "react-native-elements";
 import DataContext from "../context/DataContext";
 import Feather from "react-native-vector-icons/Feather";
+
+
 const Login = ({ navigation }) => {
-  const { loginstatus, SignIn } = useContext(DataContext);
+  const { loginerr, SignIn } = useContext(DataContext);
   const [password, setPassword] = useState();
   const [email, setEmail] = useState();
   const [textInputChange, setTextInputChange] = useState(false);
@@ -76,13 +84,23 @@ const Login = ({ navigation }) => {
             onPress={() => {
               SignIn(email, password);
               {
-                loginstatus === true
-                  ? navigation.navigate("MainScreen")
-                  : navigation.navigate("Signup");
+                loginerr
+                  ? Alert.alert("Unsuccessful Login")
+                  : navigation.navigate("MainScreen");
               }
             }}
           />
         </View>
+
+        
+        <TouchableOpacity
+          accessibilityRole="link"
+          onPress={() => navigation.navigate("SignUp")}
+        >
+          <View style={styles.innertextContainer}>
+            <Text style={styles.linktext}>Dont have an account! Regiser</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -127,10 +145,16 @@ const styles = StyleSheet.create({
   icon: {
     marginRight: 10,
   },
-  logo: {
-    width: 58,
-    height: 54,
-    resizeMode: "cover",
+
+  innertextContainer: {
+    flexDirection: "row-reverse",
+   
+    marginLeft: 7,
+  },
+
+  linktext: {
+    fontSize: 13,
+    color: "#ffffff",
   },
 });
 export default Login;

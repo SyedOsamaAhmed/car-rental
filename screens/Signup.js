@@ -1,9 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableWithoutFeedback,
+  TouchableOpacity,
   Keyboard,
   Alert,
 } from "react-native";
@@ -12,12 +13,13 @@ import DataContext from "../context/DataContext";
 import { useNavigation } from "@react-navigation/native";
 
 function Signup() {
-  const { signupstatus, SignUp ,setSignupStatus} = useContext(DataContext);
+  const { signuperr, SignUp } = useContext(DataContext);
   const [name, setName] = useState();
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [cnic, setCNIC] = useState();
   const [password, setPassword] = useState();
+
   const navigation = useNavigation();
 
   return (
@@ -128,23 +130,24 @@ function Signup() {
             title="Register"
             buttonStyle={styles.button}
             onPress={() => {
-             
-              setSignupStatus( SignUp(email, name, username, password, cnic));
-              signupstatus === true
-                ? navigation.navigate("Login")
-                : Alert.alert("Error creating Account!");
+              SignUp(email, name, username, password, cnic);
+              {
+                signuperr
+                  ? Alert.alert("Failed to create an account")
+                  : navigation.navigate("Login");
+              }
             }}
           />
         </View>
 
-        <TouchableWithoutFeedback
+        <TouchableOpacity
           accessibilityRole="link"
           onPress={() => navigation.navigate("Login")}
         >
           <View style={styles.innertextContainer}>
             <Text style={styles.linktext}>Already have an account! Login</Text>
           </View>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
       </View>
     </View>
   );

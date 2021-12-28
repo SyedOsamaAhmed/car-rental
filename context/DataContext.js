@@ -1,6 +1,7 @@
 import React, { useState, useEffect, createContext } from "react";
 import auth from "@react-native-firebase/auth";
 import database from "@react-native-firebase/database";
+import { NavigationContainer } from "@react-navigation/native";
 
 function writetoDatabase(cred, name, username, cnic) {
   const newReference = database().ref("users/" + cnic);
@@ -19,8 +20,10 @@ const DataContext = createContext({});
 
 export const DataProvider = ({ children }) => {
   const [user, setUser] = useState();
-  const [signupstatus, setSignupStatus] = useState(false);
-  const [loginstatus, setLoginStatus] = useState(false);
+  const [signuperr,setSignupErr] =useState();
+  const [loginerr,setLoginErr] =useState();
+
+
   const [initializing, setInitializing] = useState(true);
 
   function onAuthStateChanged(user) {
@@ -40,22 +43,22 @@ export const DataProvider = ({ children }) => {
     <DataContext.Provider
       value={{
         user,
-        signupstatus,
-        setSignupStatus,
-        loginstatus,
-       
-        
+        signuperr,
+        loginerr,
+    
+
         SignUp: async (email, name, username, password, cnic) => {
           await auth()
             .createUserWithEmailAndPassword(email, password)
             .then((cred) => {
-              setSignupStatus(true);
+           
               writetoDatabase(cred, name, username, cnic);
+            
             })
             .catch((err) => {
-              Alert.alert(err.code, err.message);
+              setSignupErr(err.message);
             });
-            return signupstatus;
+      
         },
         SignIn: async (email, password) => {
           if (!email || !password) {
@@ -65,7 +68,7 @@ export const DataProvider = ({ children }) => {
           await auth()
             .signInWithEmailAndPassword(email, password)
             .then(() => setLoginStatus(true))
-            .catch((err) => Alert.alert(err.code, err.message));
+            .catch((err) => setLoginErr(err.message));
         },
         forgotPassword: async (email) => {
           if (!email) {
