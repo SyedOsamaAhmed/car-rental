@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext } from "react";
 import auth from "@react-native-firebase/auth";
 import database from "@react-native-firebase/database";
-import { NavigationContainer } from "@react-navigation/native";
+
 
 function writetoDatabase(cred, name, username, cnic) {
   const newReference = database().ref("users/" + cnic);
@@ -22,7 +22,7 @@ export const DataProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [signuperr,setSignupErr] =useState();
   const [loginerr,setLoginErr] =useState();
-
+  const [cnic, setCNIC] = useState();
 
   const [initializing, setInitializing] = useState(true);
 
@@ -45,6 +45,8 @@ export const DataProvider = ({ children }) => {
         user,
         signuperr,
         loginerr,
+        cnic,
+        setCNIC,
     
 
         SignUp: async (email, name, username, password, cnic) => {

@@ -7,11 +7,12 @@ import database from '@react-native-firebase/database';
 
 import List from '../components/List';
 
-const mainscreen = ({navigation}) => {
+const mainscreen = () => {
   const [cars, setCars] = useState();
   const [flag, setFlag] = useState(false);
 
   const extractCarDetails = () => {
+    console.log('inside details')
     let carlist = [];
     let newcar = {};
     database()
@@ -20,7 +21,9 @@ const mainscreen = ({navigation}) => {
       .then(snapshot => {
         if (snapshot !== null) {
           snapshot.forEach(function (item) {
-            item.child('Cars').forEach(function (subitem) {
+          
+            item.forEach(function (subitem) {
+              
               newcar = subitem.val();
               newcar['numberplate'] = subitem.key;
               carlist.push(newcar);
@@ -62,7 +65,6 @@ const styles = StyleSheet.create({
   maincontainer: {
     display: 'flex',
     flex: 1,
-
     backgroundColor: '#000000',
   },
 

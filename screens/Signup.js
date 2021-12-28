@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -13,11 +13,11 @@ import DataContext from "../context/DataContext";
 import { useNavigation } from "@react-navigation/native";
 
 function Signup() {
-  const { signuperr, SignUp } = useContext(DataContext);
+  const { signuperr, SignUp,cnic,setCNIC } = useContext(DataContext);
   const [name, setName] = useState();
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
-  const [cnic, setCNIC] = useState();
+ 
   const [password, setPassword] = useState();
 
   const navigation = useNavigation();

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MainScreen from "./screens/mainscreen";
@@ -15,7 +15,7 @@ const App = () => {
     <DataProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen
+      {/*     <Stack.Screen
             name="SignUp"
             component={Signup}
             options={{ headerShown: false }}
@@ -25,7 +25,7 @@ const App = () => {
             name="Login"
             component={Login}
             options={{ headerShown: false }}
-          />
+          /> */}
 
           <Stack.Screen
             name="MainScreen"
