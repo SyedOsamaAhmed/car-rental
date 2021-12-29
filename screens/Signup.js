@@ -13,8 +13,8 @@ import DataContext from "../context/DataContext";
 import { useNavigation } from "@react-navigation/native";
 
 function Signup() {
-  const { signuperr, SignUp,cnic,setCNIC } = useContext(DataContext);
-  const [name, setName] = useState();
+  const { signuperr, SignUp,cnic,setCNIC,name,setName} = useContext(DataContext);
+  
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
  

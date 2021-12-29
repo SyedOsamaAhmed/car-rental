@@ -23,7 +23,7 @@ export const DataProvider = ({ children }) => {
   const [signuperr,setSignupErr] =useState();
   const [loginerr,setLoginErr] =useState();
   const [cnic, setCNIC] = useState();
-
+  const [name, setName] = useState();
   const [initializing, setInitializing] = useState(true);
 
   function onAuthStateChanged(user) {
@@ -47,6 +47,8 @@ export const DataProvider = ({ children }) => {
         loginerr,
         cnic,
         setCNIC,
+        name,
+        setName,
     
 
         SignUp: async (email, name, username, password, cnic) => {
