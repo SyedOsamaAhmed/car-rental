@@ -5,6 +5,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import DatePicker from "react-native-date-picker";
 import DataContext from "../context/DataContext";
 import database from "@react-native-firebase/database";
+import moment from "moment";
 
 const BookingDetails = () => {
   const { cnic, name } = useContext(DataContext);
@@ -16,6 +17,9 @@ const BookingDetails = () => {
   const [openEndDate, setOpenEndDate] = useState(false);
   const [age, setAge] = useState();
   const [carname, setCarname] = useState();
+  const [time, settime] = useState();
+  const [bookingstartdate, setbookingstartdate] = useState();
+  const [bookingenddate, setbookingenddate] = useState();
 
   function writeData(age, startdate, enddate, date) {
     console.log("inside get data");
@@ -24,6 +28,8 @@ const BookingDetails = () => {
       .push("Bookings");
 
     console.log(age, startdate, enddate, date);
+    datetimeSeparation(date, startdate, enddate);
+    console.log(time, bookingstartdate, bookingenddate);
     /*   Reference.once("value").then((snapshot) => {
       if (snapshot.val() != null) {
         Reference.set({
@@ -36,25 +42,47 @@ const BookingDetails = () => {
     }); */
   }
 
+  function datetimeSeparation(date, startdate, enddate) {
+    console.log("inside date time separation");
+
+    //Separatig time from date:
+    let bookdate = moment(date).format("dddd,MMMM Do YYYY,h:mm:ss a");
+    let time = bookdate.toString();
+    console.log(time);
+
+    let [newtime] = time.split(",");
+    console.log(newtime);
+    settime(newtime);
+
+    //Separating date from time:
+
+    let bookstartdate = moment(startdate).format("dddd,MMMM Do YYYY,h:mm:ss a");
+    let [, separated] = bookstartdate.split(",");
+    console.log(separated);
+    setbookingstartdate(separated);
+
+    let bookingenddate = moment(enddate).format("dddd,MMMM Do YYYY,h:mm:ss a");
+    let [, date2,] = bookingenddate.split(",");
+    console.log(date2);
+    setbookingenddate(date2);
+  }
+
   return (
     <View style={styles.maincontainer}>
       <Text style={styles.heading}>Booking Details</Text>
-<View style={styles.bookinginfo}>
-
-      <Text style={styles.bookingtitle}>Name: {name}</Text>
-      <Text style={styles.bookingtitle}>CNIC: {cnic}</Text>
-</View>
+      <View style={styles.bookinginfo}>
+        <Text style={styles.bookingtitle}>Name: {name}</Text>
+        <Text style={styles.bookingtitle}>CNIC: {cnic}</Text>
+      </View>
 
       <Input
         placeholder="Age"
-        containerStyle={styles.inputContainer}
         containerStyle={styles.inputContainer}
         onChangeText={(age) => setAge(age)}
         keyboardType="numeric"
       />
       <Input
         placeholder="Car Name"
-        containerStyle={styles.inputContainer}
         containerStyle={styles.inputContainer}
         onChangeText={(carname) => setCarname(carname)}
       />
@@ -150,7 +178,7 @@ const BookingDetails = () => {
           title="Confirm Booking"
           buttonStyle={styles.button}
           containerStyle={styles.buttoncontainer}
-          onPress={()=>writeData(age, startdate, enddate, date)}
+          onPress={() => writeData(age, startdate, enddate, date)}
         />
       </View>
     </View>
@@ -186,16 +214,16 @@ const styles = StyleSheet.create({
 
   bookingstartdate: {
     flexDirection: "row",
-    justifyContent:'space-between',
+    justifyContent: "space-between",
     margin: 5,
   },
-  bookinginfo:{
-    marginHorizontal:8,
+  bookinginfo: {
+    marginHorizontal: 8,
   },
 
   bookingenddate: {
     flexDirection: "row",
-    justifyContent:'space-between',
+    justifyContent: "space-between",
     margin: 5,
   },
   bookingtitlecontainer: {
@@ -209,7 +237,7 @@ const styles = StyleSheet.create({
 
   bookingtime: {
     flexDirection: "row",
-    justifyContent:'space-between',
+    justifyContent: "space-between",
     margin: 5,
   },
 
