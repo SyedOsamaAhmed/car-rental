@@ -1,14 +1,15 @@
 import React, { useState, useContext } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet} from "react-native";
 import { Button, Input } from "react-native-elements";
-import Icon from "react-native-vector-icons/FontAwesome";
 import DatePicker from "react-native-date-picker";
 import DataContext from "../context/DataContext";
 import database from "@react-native-firebase/database";
+
+
 import moment from "moment";
 
 const BookingDetails = () => {
-  const { cnic, name } = useContext(DataContext);
+  const { cnic, name,selected } = useContext(DataContext);
   const [startdate, setStartDate] = useState(new Date());
   const [enddate, setEndtDate] = useState(new Date());
   const [date, setDate] = useState(new Date());
@@ -16,30 +17,28 @@ const BookingDetails = () => {
   const [openStartDate, setOpenStartDate] = useState(false);
   const [openEndDate, setOpenEndDate] = useState(false);
   const [age, setAge] = useState();
-  const [carname, setCarname] = useState();
-  const [time, settime] = useState();
-  const [bookingstartdate, setbookingstartdate] = useState();
-  const [bookingenddate, setbookingenddate] = useState();
+  
 
-  function writeData(age, startdate, enddate, date) {
-    console.log("inside get data");
+
+  function writeData(date, startdate, enddate) {
+    
     const Reference = database()
       .ref("users/" + cnic)
       .push("Bookings");
 
-    console.log(age, startdate, enddate, date);
-    datetimeSeparation(date, startdate, enddate);
-    console.log(time, bookingstartdate, bookingenddate);
-    /*   Reference.once("value").then((snapshot) => {
+ 
+  
+      Reference.once("value").then((snapshot) => {
       if (snapshot.val() != null) {
         Reference.set({
+          name:name,
           age: age,
           bookingtime: date,
           bookingstartdate: startdate,
           bookingenddate: enddate,
         });
       }
-    }); */
+    });
   }
 
   function datetimeSeparation(date, startdate, enddate) {
@@ -50,41 +49,35 @@ const BookingDetails = () => {
     let time = bookdate.toString();
     console.log(time);
 
-    let [newtime] = time.split(",");
-    console.log(newtime);
-    settime(newtime);
+    let [booktime] = time.split(",");
+
 
     //Separating date from time:
 
-    let bookstartdate = moment(startdate).format("dddd,MMMM Do YYYY,h:mm:ss a");
-    let [, separated] = bookstartdate.split(",");
-    console.log(separated);
-    setbookingstartdate(separated);
+    let bookstartdate = moment(startdate).format("dddd,MMMM Do YYYY,h:mm a");
+    let [, bookstarttime,] = bookstartdate.split(",");
 
-    let bookingenddate = moment(enddate).format("dddd,MMMM Do YYYY,h:mm:ss a");
-    let [, date2,] = bookingenddate.split(",");
-    console.log(date2);
-    setbookingenddate(date2);
+  
+
+    let bookingenddate = moment(enddate).format("dddd,MMMM Do YYYY,h:mm a");
+    let [, bookendtime,] = bookingenddate.split(",");
+  
+
+    writeData(booktime,bookstarttime,bookendtime);
   }
 
   return (
     <View style={styles.maincontainer}>
       <Text style={styles.heading}>Booking Details</Text>
-      <View style={styles.bookinginfo}>
-        <Text style={styles.bookingtitle}>Name: {name}</Text>
-        <Text style={styles.bookingtitle}>CNIC: {cnic}</Text>
-      </View>
+
+ 
 
       <Input
         placeholder="Age"
         containerStyle={styles.inputContainer}
         onChangeText={(age) => setAge(age)}
         keyboardType="numeric"
-      />
-      <Input
-        placeholder="Car Name"
-        containerStyle={styles.inputContainer}
-        onChangeText={(carname) => setCarname(carname)}
+        inputStyle={styles.inputtext}
       />
 
       <View style={styles.detailsContainer}>
@@ -165,12 +158,7 @@ const BookingDetails = () => {
             }}
           />
         </View>
-        <View style={styles.uploadcontainer}>
-          <Icon name="upload" size={18} color="#fcfcfc" />
-          <View style={styles.uploadtitlecontainer}>
-            <Text style={styles.uploadtitle}>Upload License</Text>
-          </View>
-        </View>
+       
       </View>
 
       <View style={styles.confirmbuttoncontainer}>
@@ -178,7 +166,7 @@ const BookingDetails = () => {
           title="Confirm Booking"
           buttonStyle={styles.button}
           containerStyle={styles.buttoncontainer}
-          onPress={() => writeData(age, startdate, enddate, date)}
+          onPress={() => datetimeSeparation(date, startdate, enddate)}
         />
       </View>
     </View>
@@ -196,14 +184,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
   },
 
-  uploadtitlecontainer: {
-    marginHorizontal: 8,
+  inputtext: {
+    color: "#fff",
   },
 
-  uploadtitle: {
-    color: "#fafffb",
-    fontSize: 15,
-  },
 
   heading: {
     color: "#fcba03",
@@ -216,9 +200,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     margin: 5,
-  },
-  bookinginfo: {
-    marginHorizontal: 8,
   },
 
   bookingenddate: {

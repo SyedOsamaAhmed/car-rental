@@ -15,7 +15,7 @@ const App = () => {
     <DataProvider>
       <NavigationContainer>
         <Stack.Navigator>
-      {/*     <Stack.Screen
+          {/*    <Stack.Screen
             name="SignUp"
             component={Signup}
             options={{ headerShown: false }}
@@ -25,13 +25,13 @@ const App = () => {
             name="Login"
             component={Login}
             options={{ headerShown: false }}
-          /> */}
-
-         {/*  <Stack.Screen
+          /> 
+*/}
+          <Stack.Screen
             name="MainScreen"
             component={MainScreen}
             options={{ headerShown: false }}
-          /> */}
+          />  
           <Stack.Screen
             name="Details"
             component={Bookings}
