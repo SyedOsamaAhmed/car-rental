@@ -1,12 +1,12 @@
-import React, { useContext,useState } from "react";
-import { View, StyleSheet, Text, FlatList,Modal } from "react-native";
+import React, { useContext } from "react";
+import { View, StyleSheet, Text, FlatList } from "react-native";
 import { Button } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import DataContext from "../context/DataContext";
 
 const List = (props) => {
   const navigation = useNavigation();
-  const [modalVisible, setModalVisible] = useState(false);
+
   const {setSelected } = useContext(DataContext);
 
   let carselected={}
@@ -17,10 +17,9 @@ const List = (props) => {
       <Text style={styles.cardetails}>Name: {item.name}</Text>
       <Text style={styles.cardetails}>Catagory: {item.catagory}</Text>
       <Text style={styles.cardetails}>Color: {item.color}</Text>
-      <Text style={styles.cardetails}>Stereo: {item.stereo}</Text>
-      <Text style={styles.cardetails}>Status: {item.licensestatus}</Text>
-      <Text style={styles.cardetails}>Price/day: {item.priceperday}</Text>
-      <Text style={styles.cardetails}>Price/hour: {item.priceperhour}</Text>
+      <Text style={styles.cardetails}>Status: {item.license}</Text>
+      <Text style={styles.cardetails}>Price/day: {item.priceprday}</Text>
+      <Text style={styles.cardetails}>Price/hour: {item.priceprhour}</Text>
 
       <Button
         title="Book"
@@ -29,34 +28,14 @@ const List = (props) => {
         onPress={() => {
           setSelected(item);
           carselected=item;
-      setModalVisible(true)
-          //navigation.navigate("Details");
+          navigation.navigate("Confirmation");
         }}
       />
     </View>
   );
   return (
     <View style={styles.footer}>
-
-
-<View style={styles.modalView}>
-<Text style={styles.cardetails}>Name:{carselected.name}</Text>
-      <Text style={styles.cardetails}>Catagory:</Text>
-      <Text style={styles.cardetails}>Color:</Text>
-      <Text style={styles.cardetails}>Stereo:</Text>
-      <Text style={styles.cardetails}>Status: </Text>
-      <Text style={styles.cardetails}>Price/day: </Text>
-      <Text style={styles.cardetails}>Price/hour:</Text>
-
-</View>
-    <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-       
-          setModalVisible(!modalVisible);}}
-    />
+  
       <FlatList
         data={props.list}
         renderItem={renderItem}
@@ -101,21 +80,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5
-  },
 });
 
 export default List;

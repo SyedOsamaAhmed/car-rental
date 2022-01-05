@@ -9,7 +9,7 @@ import database from "@react-native-firebase/database";
 import moment from "moment";
 
 const BookingDetails = () => {
-  const { cnic, name,selected } = useContext(DataContext);
+  const { cnic, name } = useContext(DataContext);
   const [startdate, setStartDate] = useState(new Date());
   const [enddate, setEndtDate] = useState(new Date());
   const [date, setDate] = useState(new Date());

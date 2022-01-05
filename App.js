@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MainScreen from "./screens/mainscreen";
 import Bookings from "./screens/bookingdetails";
+import CarDetails from "./screens/cardetails";
 import Signup from "./screens/Signup";
 import Login from "./screens/Login";
 
@@ -31,6 +32,12 @@ const App = () => {
             name="MainScreen"
             component={MainScreen}
             options={{ headerShown: false }}
+          />  
+          <Stack.Screen
+            name="Confirmation"
+            component={CarDetails}
+            options={{ headerShown: false }}
+            screenOptions={{ presentation: 'modal' }}
           />  
           <Stack.Screen
             name="Details"
