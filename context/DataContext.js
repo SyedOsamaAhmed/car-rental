@@ -21,8 +21,6 @@ export const DataProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [signuperr, setSignupErr] = useState();
   const [loginerr, setLoginErr] = useState();
-  const [cnic, setCNIC] = useState();
-  const [name, setName] = useState();
   const [selected, setSelected] = useState();
   const [initializing, setInitializing] = useState(true);
 
@@ -45,10 +43,6 @@ export const DataProvider = ({ children }) => {
         user,
         signuperr,
         loginerr,
-        cnic,
-        setCNIC,
-        name,
-        setName,
         selected,
         setSelected,
 

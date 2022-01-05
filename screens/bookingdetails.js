@@ -1,21 +1,20 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button, Input } from "react-native-elements";
 import DatePicker from "react-native-date-picker";
-import DataContext from "../context/DataContext";
 import database from "@react-native-firebase/database";
 
 import moment from "moment";
 
 const BookingDetails = () => {
-  const { cnic, name } = useContext(DataContext);
+  const [cnic, setCNIC] = useState();
+  const [name, setName] = useState();
   const [startdate, setStartDate] = useState(new Date());
   const [enddate, setEndtDate] = useState(new Date());
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [openStartDate, setOpenStartDate] = useState(false);
   const [openEndDate, setOpenEndDate] = useState(false);
-  const [age, setAge] = useState();
   const [address, setAddress] = useState();
 
   function writeData() {
@@ -71,9 +70,16 @@ const BookingDetails = () => {
       <Text style={styles.heading}>Booking Details</Text>
 
       <Input
-        placeholder="Age"
+        placeholder="Name"
         containerStyle={styles.inputContainer}
-        onChangeText={(age) => setAge(age)}
+        onChangeText={(name) => setName(name)}
+        inputStyle={styles.inputtext}
+      />
+
+      <Input
+        placeholder="CNIC"
+        containerStyle={styles.inputContainer}
+        onChangeText={(cnic) => setCNIC(cnic)}
         keyboardType="numeric"
         inputStyle={styles.inputtext}
       />
