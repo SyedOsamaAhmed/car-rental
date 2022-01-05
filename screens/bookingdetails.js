@@ -1,10 +1,9 @@
 import React, { useState, useContext } from "react";
-import { View, Text, StyleSheet} from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { Button, Input } from "react-native-elements";
 import DatePicker from "react-native-date-picker";
 import DataContext from "../context/DataContext";
 import database from "@react-native-firebase/database";
-
 
 import moment from "moment";
 
@@ -17,21 +16,17 @@ const BookingDetails = () => {
   const [openStartDate, setOpenStartDate] = useState(false);
   const [openEndDate, setOpenEndDate] = useState(false);
   const [age, setAge] = useState();
-  
+  const [address, setAddress] = useState();
 
-
-  function writeData(date, startdate, enddate) {
-    
+  function writeData() {
     const Reference = database()
       .ref("users/" + cnic)
       .push("Bookings");
 
- 
-  
-      Reference.once("value").then((snapshot) => {
+    Reference.once("value").then((snapshot) => {
       if (snapshot.val() != null) {
         Reference.set({
-          name:name,
+          name: name,
           age: age,
           bookingtime: date,
           bookingstartdate: startdate,
@@ -49,34 +44,43 @@ const BookingDetails = () => {
     let time = bookdate.toString();
     console.log(time);
 
-    let [booktime] = time.split(",");
-
+    let [, , booktime] = time.split(",");
 
     //Separating date from time:
 
     let bookstartdate = moment(startdate).format("dddd,MMMM Do YYYY,h:mm a");
-    let [, bookstarttime,] = bookstartdate.split(",");
-
-  
+    let [, bookstarttime] = bookstartdate.split(",");
 
     let bookingenddate = moment(enddate).format("dddd,MMMM Do YYYY,h:mm a");
-    let [, bookendtime,] = bookingenddate.split(",");
-  
+    let [, bookendtime] = bookingenddate.split(",");
 
-    writeData(booktime,bookstarttime,bookendtime);
+    const booking = {
+      name: name,
+      age: age,
+      cnic: cnic,
+      address: address,
+      bookingstartperiod: bookstarttime,
+      bookingendperiod: bookendtime,
+      bookingtime: booktime,
+    };
+    console.log(booking);
   }
 
   return (
     <View style={styles.maincontainer}>
       <Text style={styles.heading}>Booking Details</Text>
 
- 
-
       <Input
         placeholder="Age"
         containerStyle={styles.inputContainer}
         onChangeText={(age) => setAge(age)}
         keyboardType="numeric"
+        inputStyle={styles.inputtext}
+      />
+      <Input
+        placeholder="Address"
+        containerStyle={styles.inputContainer}
+        onChangeText={(address) => setAddress(address)}
         inputStyle={styles.inputtext}
       />
 
@@ -158,7 +162,6 @@ const BookingDetails = () => {
             }}
           />
         </View>
-       
       </View>
 
       <View style={styles.confirmbuttoncontainer}>
@@ -187,7 +190,6 @@ const styles = StyleSheet.create({
   inputtext: {
     color: "#fff",
   },
-
 
   heading: {
     color: "#fcba03",

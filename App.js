@@ -28,7 +28,7 @@ const App = () => {
             options={{ headerShown: false }}
           /> 
 */}
-          <Stack.Screen
+        {/*   <Stack.Screen
             name="MainScreen"
             component={MainScreen}
             options={{ headerShown: false }}
@@ -38,7 +38,7 @@ const App = () => {
             component={CarDetails}
             options={{ headerShown: false }}
             screenOptions={{ presentation: 'modal' }}
-          />  
+          />   */}
           <Stack.Screen
             name="Details"
             component={Bookings}
