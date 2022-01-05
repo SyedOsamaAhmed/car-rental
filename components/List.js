@@ -7,12 +7,10 @@ import DataContext from "../context/DataContext";
 const List = (props) => {
   const navigation = useNavigation();
 
-  const {setSelected } = useContext(DataContext);
+  const { setSelected } = useContext(DataContext);
 
-  let carselected={}
+  let carselected = {};
   const renderItem = ({ item }) => (
-   
-
     <View style={styles.cars}>
       <Text style={styles.cardetails}>Name: {item.name}</Text>
       <Text style={styles.cardetails}>Catagory: {item.catagory}</Text>
@@ -27,15 +25,14 @@ const List = (props) => {
         containerStyle={styles.buttonContainer}
         onPress={() => {
           setSelected(item);
-          carselected=item;
-          navigation.navigate("Confirmation");
+          carselected = item;
+          navigation.navigate("Car Confirmation");
         }}
       />
     </View>
   );
   return (
     <View style={styles.footer}>
-  
       <FlatList
         data={props.list}
         renderItem={renderItem}
@@ -79,7 +76,6 @@ const styles = StyleSheet.create({
     color: "#f0ede6",
     alignItems: "center",
   },
-
 });
 
 export default List;

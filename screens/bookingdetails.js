@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button, Input } from "react-native-elements";
 import DatePicker from "react-native-date-picker";
-import database from "@react-native-firebase/database";
-
+import DataContext from "../context/DataContext";
+import { useNavigation } from "@react-navigation/native";
 import moment from "moment";
 
 const BookingDetails = () => {
+  const { setBookings } = useContext(DataContext);
   const [cnic, setCNIC] = useState();
   const [name, setName] = useState();
   const [startdate, setStartDate] = useState(new Date());
@@ -16,24 +17,7 @@ const BookingDetails = () => {
   const [openStartDate, setOpenStartDate] = useState(false);
   const [openEndDate, setOpenEndDate] = useState(false);
   const [address, setAddress] = useState();
-
-  function writeData() {
-    const Reference = database()
-      .ref("users/" + cnic)
-      .push("Bookings");
-
-    Reference.once("value").then((snapshot) => {
-      if (snapshot.val() != null) {
-        Reference.set({
-          name: name,
-          age: age,
-          bookingtime: date,
-          bookingstartdate: startdate,
-          bookingenddate: enddate,
-        });
-      }
-    });
-  }
+  const navigation = useNavigation();
 
   function datetimeSeparation(date, startdate, enddate) {
     console.log("inside date time separation");
@@ -41,7 +25,7 @@ const BookingDetails = () => {
     //Separatig time from date:
     let bookdate = moment(date).format("dddd,MMMM Do YYYY,h:mm:ss a");
     let time = bookdate.toString();
-    console.log(time);
+  
 
     let [, , booktime] = time.split(",");
 
@@ -55,14 +39,16 @@ const BookingDetails = () => {
 
     const booking = {
       name: name,
-      age: age,
+ 
       cnic: cnic,
       address: address,
       bookingstartperiod: bookstarttime,
       bookingendperiod: bookendtime,
       bookingtime: booktime,
     };
-    console.log(booking);
+    console.log(booking)
+    setBookings(booking);
+   navigation.navigate("Booking Confirmation")
   }
 
   return (
@@ -175,7 +161,11 @@ const BookingDetails = () => {
           title="Confirm Booking"
           buttonStyle={styles.button}
           containerStyle={styles.buttoncontainer}
-          onPress={() => datetimeSeparation(date, startdate, enddate)}
+          onPress={() => {
+          
+            datetimeSeparation(date, startdate, enddate);
+            navigation.navigate("Booking Confirmation")
+          }}
         />
       </View>
     </View>
@@ -256,6 +246,17 @@ const styles = StyleSheet.create({
   detailsContainer: {
     justifyContent: "space-between",
     margin: 5,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
   },
 });
 export default BookingDetails;

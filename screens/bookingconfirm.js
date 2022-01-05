@@ -4,36 +4,33 @@ import { Button } from "react-native-elements";
 import DataContext from "../context/DataContext";
 import { useNavigation } from "@react-navigation/native";
 
-const cardetails = () => {
-  const { selected } = useContext(DataContext);
+const bookingconfirm = () => {
+  const { bookings } = useContext(DataContext);
   const navigation = useNavigation();
   return (
-    <View style={styles.cars}>
-      <Text style={styles.cardetails}>Name: {selected.name}</Text>
-      <Text style={styles.cardetails}>Catagory: {selected.catagory}</Text>
-      <Text style={styles.cardetails}>Color: {selected.color}</Text>
-      <Text style={styles.cardetails}>Status: {selected.license}</Text>
-      <Text style={styles.cardetails}>Price/day: {selected.priceprday}</Text>
-      <Text style={styles.cardetails}>Price/hour: {selected.priceprhour}</Text>
+    <View style={styles.bookings}>
+      <Text style={styles.bookingdetail}> {bookings.name}</Text>
+      <Text style={styles.bookingdetail}> {bookings.age}</Text>
+      <Text style={styles.bookingdetail}> {bookings.cnic}</Text>
+      <Text style={styles.bookingdetail}>{bookings.bookingstartperiod}</Text>
+      <Text style={styles.bookingdetail}> {bookings.bookingendperiod}</Text>
+      <Text style={styles.bookingdetail}>{bookings.bookingtime}</Text>
       <Button
         title="Confirm"
         buttonStyle={styles.button}
         containerStyle={styles.buttonContainer}
-        onPress={() => {
-          navigation.navigate("Details");
-        }}
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  cars: {
+  bookings: {
     flex: 1,
     justifyContent: "center",
   },
 
-  cardetails: {
+  bookingdetail: {
     color: "#000000",
     fontSize: 20,
     marginHorizontal: 25,
@@ -51,8 +48,8 @@ const styles = StyleSheet.create({
 
   text: {
     color: "#f0ede6",
-    alignselecteds: "center",
+    alignbookingss: "center",
   },
 });
 
-export default cardetails;
+export default bookingconfirm;

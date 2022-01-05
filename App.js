@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MainScreen from "./screens/mainscreen";
 import Bookings from "./screens/bookingdetails";
 import CarDetails from "./screens/cardetails";
+import BookingDetails from "./screens/bookingdetails";
 import Signup from "./screens/Signup";
 import Login from "./screens/Login";
 
@@ -28,21 +29,29 @@ const App = () => {
             options={{ headerShown: false }}
           /> 
 */}
-        {/*   <Stack.Screen
+          {/*   <Stack.Screen
             name="MainScreen"
             component={MainScreen}
             options={{ headerShown: false }}
           />  
           <Stack.Screen
-            name="Confirmation"
+            name="Car Confirmation"
             component={CarDetails}
             options={{ headerShown: false }}
             screenOptions={{ presentation: 'modal' }}
           />   */}
+
           <Stack.Screen
             name="Details"
             component={Bookings}
             options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name="Booking Confirmation"
+            component={BookingDetails}
+            options={{ headerShown: false }}
+            screenOptions={{ presentation: "modal" }}
           />
         </Stack.Navigator>
       </NavigationContainer>
