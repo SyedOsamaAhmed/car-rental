@@ -11,23 +11,35 @@ const bookingconfirm = () => {
 
   function writetoDatabase(bookings) {
     const newReference = database().ref("users/");
+
     newReference.once("value").then((snapshot) => {
       if (snapshot.val != null) {
-       console.log(snapshot.val())
-       console.log(bookings.cnic)
         if (snapshot.hasChild(bookings.cnic)) {
-
-            newReference
-              .set({
+          snapshot.forEach((user) => {
+            if (user.child("cnic").val() == bookings.cnic) {
+              reference = database().ref(
+                "/users/" + user.child("cnic").val() + "/bookings"
+              );
+              reference.set({
                 name: bookings.name,
                 cnic: bookings.cnic,
                 bookingstart: bookings.bookingstartperiod,
                 bookindend: bookings.bookingendperiod,
                 bookingtime: bookings.bookingtime,
                 driverstatus: bookings.driverstatus,
-              })
-              .then(() => console.log("Added successfully"));
-          
+              });
+            }
+          });
+          /* const Reference = database()
+            .ref("users/" + "bookings/" );
+          Reference.set({
+            name: bookings.name,
+            cnic: bookings.cnic,
+            bookingstart: bookings.bookingstartperiod,
+            bookindend: bookings.bookingendperiod,
+            bookingtime: bookings.bookingtime,
+            driverstatus: bookings.driverstatus,
+          }).then(() => console.log("Added successfully")); */
         } else {
           Alert.alert("cnic not found!");
         }
