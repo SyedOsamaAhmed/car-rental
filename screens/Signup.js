@@ -1,21 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableWithoutFeedback,
+  TouchableOpacity,
   Keyboard,
+  Alert,
 } from "react-native";
 import { Input, Button } from "react-native-elements";
+import DataContext from "../context/DataContext";
+import { useNavigation } from "@react-navigation/native";
 
-import { Auth } from "../authentication/Auth";
+function Signup() {
+  const { signuperr, SignUp } = useContext(DataContext);
 
-function Signup({ navigation }) {
-  const [name, setName] = useState();
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
+  const [name, setName] = useState();
   const [cnic, setCNIC] = useState();
+
   const [password, setPassword] = useState();
+
+  const navigation = useNavigation();
 
   return (
     <View style={styles.maincontainer}>
@@ -60,6 +67,7 @@ function Signup({ navigation }) {
             />
           </View>
         </TouchableWithoutFeedback>
+
         <TouchableWithoutFeedback
           onPress={() => Keyboard.dismiss()}
           hitSlop={{
@@ -69,11 +77,10 @@ function Signup({ navigation }) {
         >
           <View>
             <Input
-              placeholder="Password"
+              placeholder="Email"
               ContainerStyle={styles.inputbox}
-              secureTextEntry={true}
-              onChangeText={(password) => {
-                setPassword(password);
+              onChangeText={(email) => {
+                setEmail(email);
               }}
               inputStyle={styles.inputtext}
             />
@@ -89,10 +96,11 @@ function Signup({ navigation }) {
         >
           <View>
             <Input
-              placeholder="Email"
+              placeholder="Password"
               ContainerStyle={styles.inputbox}
-              onChangeText={(email) => {
-                setEmail(email);
+              secureTextEntry={true}
+              onChangeText={(password) => {
+                setPassword(password);
               }}
               inputStyle={styles.inputtext}
             />
@@ -124,15 +132,25 @@ function Signup({ navigation }) {
             title="Register"
             buttonStyle={styles.button}
             onPress={() => {
-              Auth.SignUp(email, name, username, cnic, password);
-              navigation.navigate("Login");
+              SignUp(email, name, username, password, cnic);
+
+              {
+                signuperr
+                  ? Alert.alert("Failed to create an account")
+                  : navigation.navigate("Login");
+              }
             }}
           />
         </View>
 
-        <View style={styles.innertextContainer}>
-          <Text style={styles.linktext}>Already have an account! Login</Text>
-        </View>
+        <TouchableOpacity
+          accessibilityRole="link"
+          onPress={() => navigation.navigate("Login")}
+        >
+          <View style={styles.innertextContainer}>
+            <Text style={styles.linktext}>Already have an account! Login</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );

@@ -1,31 +1,85 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {Button, Input} from 'react-native-elements';
-import DatePicker from 'react-native-date-picker';
-
-
+import React, { useState, useContext } from "react";
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { Button, Input, CheckBox } from "react-native-elements";
+import DatePicker from "react-native-date-picker";
+import DataContext from "../context/DataContext";
+import { useNavigation } from "@react-navigation/native";
+import moment from "moment";
 
 const BookingDetails = () => {
+  const { setBookings } = useContext(DataContext);
+  const [cnic, setCNIC] = useState();
+  const [name, setName] = useState();
   const [startdate, setStartDate] = useState(new Date());
   const [enddate, setEndtDate] = useState(new Date());
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [openStartDate, setOpenStartDate] = useState(false);
   const [openEndDate, setOpenEndDate] = useState(false);
+  const [address, setAddress] = useState();
+  const [checkdriver, setCheckDriver] = useState(false);
+  const navigation = useNavigation();
 
+  function datetimeSeparation(date, startdate, enddate) {
+    console.log("inside date time separation");
 
+    //Separatig time from date:
+    let bookdate = moment(date).format("dddd,MMMM Do YYYY,h:mm:ss a");
+    let time = bookdate.toString();
+
+    let [, , booktime] = time.split(",");
+
+    //Separating date from time:
+
+    let bookstartdate = moment(startdate).format("dddd,MMMM Do YYYY,h:mm a");
+    let [, bookstarttime] = bookstartdate.split(",");
+
+    let bookingenddate = moment(enddate).format("dddd,MMMM Do YYYY,h:mm a");
+    let [, bookendtime] = bookingenddate.split(",");
+
+    const booking = {
+      name: name,
+      cnic: cnic,
+      address: address,
+      bookingstartperiod: bookstarttime,
+      bookingendperiod: bookendtime,
+      bookingtime: booktime,
+      driverstatus:checkdriver,
+    };
+
+    setBookings(booking);
+  }
 
   return (
     <View style={styles.maincontainer}>
       <Text style={styles.heading}>Booking Details</Text>
-      
-      <Input placeholder="Name" containerStyle={styles.inputContainer} />
-      <Input placeholder="CNIC" containerStyle={styles.inputContainer} />
-      <Input placeholder="Age" containerStyle={styles.inputContainer} />
+
+      <Input
+        placeholder="Name"
+        containerStyle={styles.inputContainer}
+        onChangeText={(name) => setName(name)}
+        inputStyle={styles.inputtext}
+      />
+
+      <Input
+        placeholder="CNIC"
+        containerStyle={styles.inputContainer}
+        onChangeText={(cnic) => setCNIC(cnic)}
+        keyboardType="numeric"
+        inputStyle={styles.inputtext}
+      />
+      <Input
+        placeholder="Address"
+        containerStyle={styles.inputContainer}
+        onChangeText={(address) => setAddress(address)}
+        inputStyle={styles.inputtext}
+      />
 
       <View style={styles.detailsContainer}>
         <View style={styles.bookingstartdate}>
-          <Text style={styles.bookingtitle}>Booking Start date</Text>
+          <View style={styles.bookingtitlecontainer}>
+            <Text style={styles.bookingtitle}>Booking Start date</Text>
+          </View>
           <Button
             title="Start date"
             type="outline"
@@ -37,7 +91,7 @@ const BookingDetails = () => {
             open={openStartDate}
             date={startdate}
             mode="date"
-            onConfirm={date => {
+            onConfirm={(date) => {
               setOpenStartDate(false);
               setStartDate(date);
             }}
@@ -48,19 +102,23 @@ const BookingDetails = () => {
         </View>
 
         <View style={styles.bookingenddate}>
-          <Text style={styles.bookingtitle}>Booking End date</Text>
+          <View style={styles.bookingtitlecontainer}>
+            <Text style={styles.bookingtitle}>Booking End date</Text>
+          </View>
+
           <Button
             title="End date"
             type="outline"
             containerStyle={styles.buttoncontainer}
             onPress={() => setOpenEndDate(true)}
           />
+
           <DatePicker
             modal
             open={openEndDate}
             date={enddate}
             mode="date"
-            onConfirm={date => {
+            onConfirm={(date) => {
               setOpenEndDate(false);
               setEndtDate(date);
             }}
@@ -71,7 +129,9 @@ const BookingDetails = () => {
         </View>
 
         <View style={styles.bookingtime}>
-          <Text style={styles.bookingtitle}>Booking Time</Text>
+          <View style={styles.bookingtitlecontainer}>
+            <Text style={styles.bookingtitle}>Booking Time</Text>
+          </View>
           <Button
             title="Select time"
             type="outline"
@@ -84,7 +144,7 @@ const BookingDetails = () => {
             open={open}
             date={date}
             mode="time"
-            onConfirm={date => {
+            onConfirm={(date) => {
               setOpen(false);
               setDate(date);
             }}
@@ -94,12 +154,26 @@ const BookingDetails = () => {
           />
         </View>
       </View>
+      <View style={styles.checkboxcontainer}>
+        <CheckBox
+          title="driver"
+          checked={checkdriver}
+          onPress={() => setCheckDriver(!checkdriver)}
+          containerStyle={styles.checkbox}
+          Component={TouchableWithoutFeedback}
+          textStyle={styles.checkboxtitle}
+        />
+      </View>
 
       <View style={styles.confirmbuttoncontainer}>
         <Button
           title="Confirm Booking"
           buttonStyle={styles.button}
           containerStyle={styles.buttoncontainer}
+          onPress={() => {
+            datetimeSeparation(date, startdate, enddate);
+            navigation.navigate("Booking Confirmation");
+          }}
         />
       </View>
     </View>
@@ -108,66 +182,101 @@ const BookingDetails = () => {
 
 const styles = StyleSheet.create({
   maincontainer: {
-    display: 'flex',
-    backgroundColor: '#000000',
+    display: "flex",
+    backgroundColor: "#000000",
     flex: 1,
+  },
+  uploadcontainer: {
+    flexDirection: "row",
+    marginHorizontal: 8,
+  },
+
+  inputtext: {
+    color: "#fff",
   },
 
   heading: {
-    color: '#fcba03',
+    color: "#fcba03",
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     margin: 8,
   },
 
   bookingstartdate: {
-    flexDirection: 'row',
+    flexDirection: "row",
+    justifyContent: "space-between",
     margin: 5,
   },
 
   bookingenddate: {
-    flexDirection: 'row',
+    flexDirection: "row",
+    justifyContent: "space-between",
     margin: 5,
+  },
+  bookingtitlecontainer: {
+    marginHorizontal: 8,
   },
 
   bookingtitle: {
-    color: '#fafffb',
+    color: "#fafffb",
     fontSize: 17,
-    margin: 10,
   },
 
   bookingtime: {
-    flexDirection: 'row',
+    flexDirection: "row",
+    justifyContent: "space-between",
     margin: 5,
   },
 
   title: {
-    color: '#fafffb',
+    color: "#fafffb",
     fontSize: 16,
     margin: 3,
   },
 
   buttoncontainer: {
-    width: '50%',
-    margin: 8,
+    width: "50%",
   },
 
   confirmbuttoncontainer: {
     margin: 5,
-    flexDirection: 'row-reverse',
+    flexDirection: "row-reverse",
   },
   inputContainer: {
-    display: 'flex',
+    display: "flex",
     margin: 3,
   },
 
   button: {
-    backgroundColor: 'rgba(78, 116, 289, 1)',
+    backgroundColor: "rgba(78, 116, 289, 1)",
     borderRadius: 3,
   },
   detailsContainer: {
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
     margin: 5,
   },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+  },
+
+  checkbox: {
+    backgroundColor: "#000000",
+    borderWidth: 0,
+  },
+  checkboxcontainer:{
+    marginHorizontal:10,
+  },
+  checkboxtitle:{
+    fontSize:14,
+    color:'#ffffff',
+  }
 });
 export default BookingDetails;
