@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { Button, Input } from "react-native-elements";
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { Button, Input, CheckBox } from "react-native-elements";
 import DatePicker from "react-native-date-picker";
 import DataContext from "../context/DataContext";
 import { useNavigation } from "@react-navigation/native";
@@ -17,6 +17,7 @@ const BookingDetails = () => {
   const [openStartDate, setOpenStartDate] = useState(false);
   const [openEndDate, setOpenEndDate] = useState(false);
   const [address, setAddress] = useState();
+  const [checkdriver, setCheckDriver] = useState(false);
   const navigation = useNavigation();
 
   function datetimeSeparation(date, startdate, enddate) {
@@ -25,7 +26,6 @@ const BookingDetails = () => {
     //Separatig time from date:
     let bookdate = moment(date).format("dddd,MMMM Do YYYY,h:mm:ss a");
     let time = bookdate.toString();
-  
 
     let [, , booktime] = time.split(",");
 
@@ -39,16 +39,15 @@ const BookingDetails = () => {
 
     const booking = {
       name: name,
- 
       cnic: cnic,
       address: address,
       bookingstartperiod: bookstarttime,
       bookingendperiod: bookendtime,
       bookingtime: booktime,
+      driverstatus:checkdriver,
     };
-    console.log(booking)
+
     setBookings(booking);
-   navigation.navigate("Booking Confirmation")
   }
 
   return (
@@ -155,6 +154,16 @@ const BookingDetails = () => {
           />
         </View>
       </View>
+      <View style={styles.checkboxcontainer}>
+        <CheckBox
+          title="driver"
+          checked={checkdriver}
+          onPress={() => setCheckDriver(!checkdriver)}
+          containerStyle={styles.checkbox}
+          Component={TouchableWithoutFeedback}
+          textStyle={styles.checkboxtitle}
+        />
+      </View>
 
       <View style={styles.confirmbuttoncontainer}>
         <Button
@@ -162,9 +171,8 @@ const BookingDetails = () => {
           buttonStyle={styles.button}
           containerStyle={styles.buttoncontainer}
           onPress={() => {
-          
             datetimeSeparation(date, startdate, enddate);
-            navigation.navigate("Booking Confirmation")
+            navigation.navigate("Booking Confirmation");
           }}
         />
       </View>
@@ -258,5 +266,17 @@ const styles = StyleSheet.create({
       height: 2,
     },
   },
+
+  checkbox: {
+    backgroundColor: "#000000",
+    borderWidth: 0,
+  },
+  checkboxcontainer:{
+    marginHorizontal:10,
+  },
+  checkboxtitle:{
+    fontSize:14,
+    color:'#ffffff',
+  }
 });
 export default BookingDetails;

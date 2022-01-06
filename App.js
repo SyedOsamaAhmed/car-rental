@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MainScreen from "./screens/mainscreen";
 import Bookings from "./screens/bookingdetails";
 import CarDetails from "./screens/cardetails";
-import BookingDetails from "./screens/bookingdetails";
+import BookingDetails from "./screens/bookingconfirm";
 import Signup from "./screens/Signup";
 import Login from "./screens/Login";
 

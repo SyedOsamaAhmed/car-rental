@@ -13,11 +13,13 @@ import DataContext from "../context/DataContext";
 import { useNavigation } from "@react-navigation/native";
 
 function Signup() {
-  const { signuperr, SignUp,cnic,setCNIC,name,setName} = useContext(DataContext);
-  
+  const { signuperr, SignUp } = useContext(DataContext);
+
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
- 
+  const [name, setName] = useState();
+  const [cnic, setCNIC] = useState();
+
   const [password, setPassword] = useState();
 
   const navigation = useNavigation();
@@ -131,6 +133,7 @@ function Signup() {
             buttonStyle={styles.button}
             onPress={() => {
               SignUp(email, name, username, password, cnic);
+
               {
                 signuperr
                   ? Alert.alert("Failed to create an account")
