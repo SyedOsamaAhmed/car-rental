@@ -1,10 +1,11 @@
-<<<<<<< HEAD
+
 node_modules
 fileChanges/
 fileHashes/
 javaCompile/
 zones/
 olson/
+
 =======
 # OSX
 #
@@ -73,4 +74,11 @@ babel.config.js
 metro.config.js
 .prettierrc.js
 __tests__/App-test.js
->>>>>>> users
+android/.gradle
+android/app/build/*
+
+**gradle/*
+
+*.jar
+*.txt
+*.lock

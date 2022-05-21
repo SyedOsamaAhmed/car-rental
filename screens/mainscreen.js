@@ -10,7 +10,7 @@ const mainscreen = () => {
   const [flag, setFlag] = useState(false);
 const [cars,setCars]=useState();
   const extractCarDetails = () => {
-    console.log("inside details");
+    
     let carlist = [];
     let newcar = {};
     database()

@@ -11,16 +11,18 @@ const bookingconfirm = () => {
 
   function writetoDatabase(bookings) {
     const newReference = database().ref("users/");
+    const Reference = database()
+    .ref("users/" + "bookings/"+bookings.cnic );
 
     newReference.once("value").then((snapshot) => {
       if (snapshot.val != null) {
         if (snapshot.hasChild(bookings.cnic)) {
           snapshot.forEach((user) => {
             if (user.child("cnic").val() == bookings.cnic) {
-              reference = database().ref(
+             let reference = database().ref(
                 "/users/" + user.child("cnic").val() + "/bookings"
               );
-              reference.set({
+            reference.set({
                 name: bookings.name,
                 cnic: bookings.cnic,
                 bookingstart: bookings.bookingstartperiod,
@@ -30,8 +32,7 @@ const bookingconfirm = () => {
               });
             }
           });
-          /* const Reference = database()
-            .ref("users/" + "bookings/" );
+          
           Reference.set({
             name: bookings.name,
             cnic: bookings.cnic,
@@ -39,9 +40,16 @@ const bookingconfirm = () => {
             bookindend: bookings.bookingendperiod,
             bookingtime: bookings.bookingtime,
             driverstatus: bookings.driverstatus,
-          }).then(() => console.log("Added successfully")); */
+          }).then(Alert.alert("Added to database successfully!"));
         } else {
-          Alert.alert("cnic not found!");
+          Reference.set({
+            name: bookings.name,
+            cnic: bookings.cnic,
+            bookingstart: bookings.bookingstartperiod,
+            bookindend: bookings.bookingendperiod,
+            bookingtime: bookings.bookingtime,
+            driverstatus: bookings.driverstatus,
+          }).then(Alert.alert("Added to database successfully!"));
         }
       }
     });
@@ -77,7 +85,6 @@ const styles = StyleSheet.create({
   bookings: {
     flex: 1,
     justifyContent: "center",
-
     backgroundColor: "#0a0a0a",
   },
 

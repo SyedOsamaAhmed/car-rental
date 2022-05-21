@@ -31,10 +31,11 @@ const styles = StyleSheet.create({
   cars: {
     flex: 1,
     justifyContent: "center",
+    backgroundColor:"#000000",
   },
 
   cardetails: {
-    color: "#000000",
+    color: "#ffffff",
     fontSize: 20,
     marginHorizontal: 25,
   },
