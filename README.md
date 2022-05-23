@@ -2,6 +2,7 @@
 
 ##Feartures:
 * User can signup and login to app.
+* Authentication of signup and login using firebase.
 * User can review and select desired car from the list.
 * User can select a car with or without driver.
 * User can complete booking process.
@@ -9,6 +10,14 @@
 ####Note:
 Cash on delivery on recieving car with driver or onsite car procuring.
 
+##Frontend:
+* HTML
+* CSS
+* Javascript
+* React
+
+##Backend:
+* Firebase
 
 ###Output:
 
