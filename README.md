@@ -19,6 +19,17 @@ Cash on delivery on recieving car with driver or onsite car procuring.
 ##Backend:
 * Firebase
 
+##Things learnt during Project:
+* **State management** using **useContext Api**.
+* **React navigation** for navigation between screens.
+* **useState** and **useEffect** usage.
+* **Authentication of users** using **Firebase**.
+* getting,storing and displaying data from **Firebase**.
+* **React Native vector Icons**.
+
+##Challenges faceed during Project:
+* **State management** with **context api**.
+
 ###Output:
 
 ![Signup](https://github.com/SyedOsamaAhmed/car-rental/blob/master/assets/Screenshots/screen%201.PNG?raw=true)
