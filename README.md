@@ -1,25 +1,25 @@
-#Car Rental App:
+# Car Rental App:
 
-##Feartures:
+## Feartures:
 * User can signup and login to app.
 * Authentication of signup and login using firebase.
 * User can review and select desired car from the list.
 * User can select a car with or without driver.
 * User can complete booking process.
 
-####Note:
+#### Note:
 Cash on delivery on recieving car with driver or onsite car procuring.
 
-##Frontend:
+## Frontend:
 * HTML
 * CSS
 * Javascript
 * React
 
-##Backend:
+## Backend:
 * Firebase
 
-##Things learnt during Project:
+## Things learnt during Project:
 * **State management** using **useContext Api**.
 * **React navigation** for navigation between screens.
 * **useState** and **useEffect** usage.
@@ -27,10 +27,10 @@ Cash on delivery on recieving car with driver or onsite car procuring.
 * getting,storing and displaying data from **Firebase**.
 * **React Native vector Icons**.
 
-##Challenges faceed during Project:
+## Challenges faceed during Project:
 * **State management** with **context api**.
 
-###Output:
+### Output:
 
 ![Signup](https://github.com/SyedOsamaAhmed/car-rental/blob/master/assets/Screenshots/screen%201.PNG?raw=true)
 
