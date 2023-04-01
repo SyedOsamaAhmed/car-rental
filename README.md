@@ -1,6 +1,6 @@
 # Car Rental App:
 
-## Feartures:
+## Features:
 * User can signup and login to app.
 * Authentication of signup and login using firebase.
 * User can review and select desired car from the list.
