@@ -17,7 +17,7 @@ Cash on delivery on recieving car with driver or onsite car procuring.
 * React
 
 ## Backend:
-* Firebase
+* Firebase Realtime database
 
 ## Things learnt during Project:
 * **State management** using **useContext Api**.
@@ -32,24 +32,35 @@ Cash on delivery on recieving car with driver or onsite car procuring.
 
 ### Output:
 
+### SignUp:
+
 ![Signup](https://github.com/SyedOsamaAhmed/car-rental/blob/master/assets/Screenshots/screen%201.PNG?raw=true)
+
+### Login:
 
 ![Login](https://github.com/SyedOsamaAhmed/car-rental/blob/master/assets/Screenshots/screen%202.PNG?raw=true)
 
-![](https://github.com/SyedOsamaAhmed/car-rental/blob/master/assets/Screenshots/screen%203.PNG?raw=true)
+### Main Screen Loading:
 
 ![Main Screen without car list](https://github.com/SyedOsamaAhmed/car-rental/blob/master/assets/Screenshots/screen%204.PNG?raw=true)
 
-![](https://github.com/SyedOsamaAhmed/car-rental/blob/master/assets/Screenshots/screen%205%20(2).PNG?raw=true)
+
+### Main Screen Loaded:
 
 ![Main Screen with car list](https://github.com/SyedOsamaAhmed/car-rental/blob/master/assets/Screenshots/screen%206.PNG?raw=true)
 
+### Car confirmation Screen:
+
 ![Car confirmation Screen](https://github.com/SyedOsamaAhmed/car-rental/blob/master/assets/Screenshots/screen%207.PNG?raw=true)
+
+### Booking details Screen:
 
 ![Booking details Page](https://github.com/SyedOsamaAhmed/car-rental/blob/master/assets/Screenshots/screen%208.PNG?raw=true)
 
-![](https://github.com/SyedOsamaAhmed/car-rental/blob/master/assets/Screenshots/screen%209.PNG?raw=true)
+
+### Booking Confirmation:
 
 ![Booking Confirmation Page](https://github.com/SyedOsamaAhmed/car-rental/blob/master/assets/Screenshots/screen%2010.PNG?raw=true)
 
+### Booking Confirmation Alert:
 ![](https://github.com/SyedOsamaAhmed/car-rental/blob/master/assets/Screenshots/screen%2011.PNG?raw=true)
